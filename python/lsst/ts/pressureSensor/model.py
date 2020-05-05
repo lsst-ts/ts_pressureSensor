@@ -4,7 +4,7 @@ from pymodbus.exceptions import ConnectionException, ModbusIOException
 
 class TransducerModel():
     """
-    Class that reads the transducer voltage through an ADAM 6024 device
+    Class that reads sensor voltage(s) through an ADAM 6024 device
 
         Parameters
         ----------
@@ -24,10 +24,16 @@ class TransducerModel():
         self.clientip = ip
         self.clientport = port
 
+        self.range_size = 20
+        self.range_start = -10
+
     def connect(self):
         self.client = ModbusClient(self.clientip, self.clientport)
 
-    def _readVoltage(self):
+    def disconnect(self):
+        self.client.close()
+
+    def read_voltage(self):
         """ reads the voltage off of ADAM-6024's inputs for channels 0-5.
 
         Parameters
@@ -41,21 +47,21 @@ class TransducerModel():
         """
         try:
             readout = self.client.read_input_registers(0, 8, unit=1)
-            return [self._countsToVolts(r) for r in readout.registers]
+            return [self.counts_to_volts(r) for r in readout.registers]
         except AttributeError:
             # read_input_registers() *returns* (not raises) a
             # ModbusIOException in the event of loss of ADAM network
             # connectivity, which causes an AttributeError when we try
             # to access the registers field. But the whole thing is
             # really a connectivity problem, so we re-raise it as a
-            # ConnectionException, which we know how to handle. Weird 
+            # ConnectionException, which we know how to handle. Weird
             # exception handling is a known issue with pymodbus so it
-            # may see a fix in a future version, which may require 
+            # may see a fix in a future version, which may require
             # minor code changes on our part.
             # https://github.com/riptideio/pymodbus/issues/298
             raise ConnectionException
 
-    def _countsToVolts(self, counts):
+    def counts_to_volts(self, counts):
         """ converts discrete ADAM-6024 input readings into volts
 
         Parameters
@@ -68,5 +74,5 @@ class TransducerModel():
         volts : float
             counts converted into voltage number
         """
-        ctv = 20/65535
-        return counts * ctv - 10
+        ctv = self.range_size/65535
+        return counts * ctv - self.range_start
