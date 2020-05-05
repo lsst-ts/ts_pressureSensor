@@ -28,7 +28,7 @@ class TransducerModel():
         self.client = ModbusClient(self.clientip, self.clientport)
 
     def _readVoltage(self):
-        """ reads the voltage off of ADAM-6024's inputs for channels 0-3.
+        """ reads the voltage off of ADAM-6024's inputs for channels 0-5.
 
         Parameters
         ----------
@@ -37,7 +37,7 @@ class TransducerModel():
         Returns
         -------
         volts : List of floats
-            the voltages on the ADAM's first 4 input channels
+            the voltages on the ADAM's input channels
         """
         try:
             readout = self.client.read_input_registers(0, 8, unit=1)
