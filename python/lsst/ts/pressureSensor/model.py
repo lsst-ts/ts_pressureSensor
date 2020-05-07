@@ -25,7 +25,7 @@ class TransducerModel():
         self.clientport = port
 
         self.range_size = 20
-        self.range_start = -10
+        self.range_start = -10 # zero point offset for the ADAM device
 
     def connect(self):
         self.client = ModbusClient(self.clientip, self.clientport)
@@ -75,4 +75,4 @@ class TransducerModel():
             counts converted into voltage number
         """
         ctv = self.range_size/65535
-        return counts * ctv - self.range_start
+        return counts * ctv + self.range_start
