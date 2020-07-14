@@ -1,0 +1,87 @@
+$schema: http://json-schema.org/draft-07/schema#
+$id: https://github.com/lsst-ts/ts_pressureSensor/blob/master/schema/pressureSensor.yaml
+# title must end with one or more spaces followed by the schema version, which must begin with "v"
+title: Whitelight v1
+description: Schema for ts_pressureSensor configuration files
+type: object
+properties:
+  adam_ip:
+    description: IP of the ADAM controller.
+    type: string
+    default: "140.252.33.160"
+  adam_port:
+    description: port of the ADAM controller.
+    type: number
+    default: 502
+  analog_input_0_type:
+    description: Type of sensor connected to ADAM AO-0. Can be "None", "Temperature", or "Pressure".
+    type: string
+    default: "None"
+  analog_input_0_min:
+    description: minimum unit value that will correspond to -10V 
+    type: number
+    default: -10
+  analog_input_0_max:
+    description: maximum unit value that will correspond to +10V 
+    type: number
+    default: 10
+  analog_input_1_type:
+    description: Type of sensor connected to ADAM AO-1. Can be "None", "Temperature", or "Pressure".
+    type: string
+    default: "None"
+  analog_input_1_min:
+    description: minimum unit value that will correspond to -10V 
+    type: number
+    default: -10
+  analog_input_1_max:
+    description: maximum unit value that will correspond to +10V 
+    type: number
+    default: 10
+  analog_input_2_type:
+    description: Type of sensor connected to ADAM AO-2. Can be "None", "Temperature", or "Pressure".
+    type: string
+    default: "None"
+  analog_input_2_min:
+    description: minimum unit value that will correspond to -10V 
+    type: number
+    default: -10
+  analog_input_2_max:
+    description: maximum unit value that will correspond to +10V 
+    type: number
+    default: 10
+  analog_input_3_type:
+    description: Type of sensor connected to ADAM AO-3. Can be "None", "Temperature", or "Pressure".
+    type: string
+    default: "None"
+  analog_input_3_min:
+    description: minimum unit value that will correspond to -10V 
+    type: number
+    default: -10
+  analog_input_3_max:
+    description: maximum unit value that will correspond to +10V 
+    type: number
+    default: 10
+  analog_input_4_type:
+    description: Type of sensor connected to ADAM AO-4. Can be "None", "Temperature", or "Pressure".
+    type: string
+    default: "None"
+  analog_input_4_min:
+    description: minimum unit value that will correspond to -10V 
+    type: number
+    default: -10
+  analog_input_4_max:
+    description: maximum unit value that will correspond to +10V 
+    type: number
+    default: 10
+  analog_input_5_type:
+    description: Type of sensor connected to ADAM AO-5. Can be "None", "Temperature", or "Pressure".
+    type: string
+    default: "None"
+  analog_input_5_min:
+    description: minimum unit value that will correspond to -10V 
+    type: number
+    default: -10
+  analog_input_5_max:
+    description: maximum unit value that will correspond to +10V 
+    type: number
+    default: 10
