@@ -41,7 +41,7 @@ class AdamCSC(salobj.ConfigurableCsc):
 
     @staticmethod
     def get_config_pkg():
-        return("ts_config_???")
+        return("ts_config_eas")
 
     async def configure(self, config):
         print('csc config')
