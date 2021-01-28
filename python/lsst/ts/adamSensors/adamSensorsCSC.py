@@ -11,8 +11,14 @@ class AdamCSC(salobj.ConfigurableCsc):
 
     def __init__(self, config_dir=None, initial_state=salobj.State.STANDBY, initial_simulation_mode=0):
         schema_path = pathlib.Path(__file__).resolve().parents[4].joinpath("schema", "AdamSensors.yaml")
-        super().__init__("AdamSensors", index=0, schema_path=schema_path, config_dir=config_dir,
-                         initial_state=initial_state, initial_simulation_mode=initial_simulation_mode)
+        super().__init__(
+            "AdamSensors",
+            index=0,
+            schema_path=schema_path,
+            config_dir=config_dir,
+            initial_state=initial_state,
+            initial_simulation_mode=initial_simulation_mode,
+        )
 
         self.connected = False
         self.adam = None
@@ -26,7 +32,9 @@ class AdamCSC(salobj.ConfigurableCsc):
     async def begin_start(self, id_data):
         await super().begin_start(id_data)
         self.adam = AdamModel(self.log, simulation_mode=True)
-        await self.adam.connect(self.config.ip, self.config.port)
+        await self.adam.connect(self.config.adam_ip, self.config.adam_port)
+        self.connected = True
+        await self.telemetry_loop()
 
     async def telemetry_loop(self):
         """
@@ -37,12 +45,13 @@ class AdamCSC(salobj.ConfigurableCsc):
 
         while self.connected:
             voltages = self.adam.read_voltage()
-
+            print(voltages)
+            asyncio.sleep(1)
 
     @staticmethod
     def get_config_pkg():
-        return("ts_config_eas")
+        return "ts_config_eas"
 
     async def configure(self, config):
-        print('csc config')
+        print("csc config")
         self.config = config
